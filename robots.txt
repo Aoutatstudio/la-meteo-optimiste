@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lameteooptimiste.fr/sitemap.xml
+Sitemap: https://la-meteo-optimiste.netlify.app/sitemap.xml
