@@ -404,7 +404,7 @@
 <header class="hero">
   <div class="sun-icon">☀️</div>
   <h1>La Météo Optimiste</h1>
-  <p class="tagline">On compare 5 modèles météo — on garde le scénario le plus ensoleillé</p>
+  <p class="tagline">On compare 8 modèles météo — on garde le scénario le plus ensoleillé</p>
 
   <div class="search-wrap">
     <div class="search-row">
@@ -419,7 +419,7 @@
 <div class="main">
   <div class="loading" id="loading">
     <div class="spinner"></div>
-    <p>On interroge <strong>5 modèles météo</strong> pour trouver le plus optimiste…</p>
+    <p>On interroge <strong>8 modèles météo</strong> pour trouver le plus optimiste…</p>
   </div>
 
   <div class="error" id="error">
@@ -442,7 +442,7 @@
 
 <footer>
   Données : <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
-  · Modèles : Météo-France AROME/ARPEGE, ECMWF IFS, ICON, GFS, Met Office UK
+  · Modèles : Météo-France, ECMWF, ICON, GFS, Met Office, GEM, JMA, KNMI
   · Géocodage : <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap Nominatim</a>
   <br>
   <span class="disclaimer">⚠️ Ce site sélectionne le scénario le plus optimiste, pas le plus probable. À utiliser avec le sourire.</span>
@@ -451,11 +451,14 @@
 <script>
 /* ── MODELS ── */
 const MODELS = [
-  { id: 'meteofrance_seamless', name: 'Météo-France', abbr: 'AROME',      flag: '🇫🇷', color: '#1D4ED8', bg: '#EFF6FF', text: '#1D4ED8' },
-  { id: 'ecmwf_ifs025',         name: 'ECMWF',        abbr: 'IFS',        flag: '🇪🇺', color: '#7C3AED', bg: '#F5F3FF', text: '#6D28D9' },
-  { id: 'icon_seamless',        name: 'ICON',          abbr: 'DWD',        flag: '🇩🇪', color: '#374151', bg: '#F9FAFB', text: '#374151' },
-  { id: 'gfs_seamless',         name: 'GFS',           abbr: 'NOAA',       flag: '🇺🇸', color: '#DC2626', bg: '#FEF2F2', text: '#B91C1C' },
-  { id: 'ukmo_seamless',        name: 'Met Office',    abbr: 'UKMO',       flag: '🇬🇧', color: '#065F46', bg: '#ECFDF5', text: '#065F46' },
+  { id: 'meteofrance_seamless', name: 'Météo-France', abbr: 'AROME/ARPEGE', color: '#1D4ED8', bg: '#EFF6FF', text: '#1D4ED8' },
+  { id: 'ecmwf_ifs025',         name: 'ECMWF',        abbr: 'IFS',          color: '#7C3AED', bg: '#F5F3FF', text: '#6D28D9' },
+  { id: 'icon_seamless',        name: 'ICON',          abbr: 'DWD',          color: '#374151', bg: '#F9FAFB', text: '#374151' },
+  { id: 'gfs_seamless',         name: 'GFS',           abbr: 'NOAA',         color: '#DC2626', bg: '#FEF2F2', text: '#B91C1C' },
+  { id: 'ukmo_seamless',        name: 'Met Office',    abbr: 'UKMO',         color: '#065F46', bg: '#ECFDF5', text: '#065F46' },
+  { id: 'gem_seamless',         name: 'GEM',           abbr: 'ECCC',         color: '#92400E', bg: '#FFFBEB', text: '#92400E' },
+  { id: 'jma_seamless',         name: 'JMA',           abbr: 'Japan',        color: '#BE185D', bg: '#FDF2F8', text: '#BE185D' },
+  { id: 'knmi_seamless',        name: 'KNMI',          abbr: 'Pays-Bas',     color: '#0369A1', bg: '#F0F9FF', text: '#0369A1' },
 ];
 
 /* ── WMO CODES ── */
@@ -572,7 +575,7 @@ function render(allModels) {
   const ll  = document.getElementById('legend-list');
   ll.innerHTML = MODELS.map(m =>
     `<span class="model-chip" style="color:${m.text};background:${m.bg};border-color:${m.color}50">
-       ${m.flag} ${m.name} <span style="opacity:.6;font-weight:400">(${m.abbr})</span>
+       ${m.name} <span style="opacity:.6;font-weight:400">(${m.abbr})</span>
      </span>`
   ).join('');
   lgd.classList.add('on');
@@ -616,7 +619,7 @@ function render(allModels) {
         </div>
         <div class="winner-side">
           <span class="model-chip" style="color:${top.model.text};background:${top.model.bg};border-color:${top.model.color}50">
-            ${top.model.flag} ${top.model.name}
+            ${top.model.name}
           </span>
           <div class="score-row">
             <div class="score-bar"><div class="score-fill" style="width:${top.sc}%"></div></div>
@@ -632,7 +635,7 @@ function render(allModels) {
           const barColor = isW ? 'linear-gradient(90deg,#FFB347,#FF8C00)' : '#CBD5E1';
           return `<div class="model-row${isW ? ' winner' : ''}">
             <span class="crown">${isW ? '🏆' : ''}</span>
-            <div class="m-name">${r.model.flag} ${r.model.name}</div>
+            <div class="m-name">${r.model.name}</div>
             <div class="m-score-wrap">
               <div class="m-bar"><div class="m-bar-fill" style="width:${r.sc}%;background:${barColor}"></div></div>
               <span class="m-score-val">${Math.round(r.sc)}</span>
